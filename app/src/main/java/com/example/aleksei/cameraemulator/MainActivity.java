@@ -1,7 +1,9 @@
 package com.example.aleksei.cameraemulator;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -9,6 +11,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    public final String CAMERA_NEW_IMAGE_INTENT = "com.example.aleksei.NEW_IMAGE";
 
     Button mCameraButton;
     ImageView mImageBackGround;
@@ -27,7 +32,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Animation myFadeInAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.tween);
                 mImageBackGround.startAnimation(myFadeInAnimation);
+                sendBroadCast();
             }
         });
+    }
+
+    private void sendBroadCast() {
+        Log.e(LOG_TAG, "sendBroadCast");
+        Intent intent = new Intent();
+        intent.setAction(CAMERA_NEW_IMAGE_INTENT);
+        sendBroadcast(intent);
     }
 }
